@@ -8,7 +8,7 @@ from helloworld import hello_pb2, hello_pb2_grpc
 class HelloService(hello_pb2_grpc.HelloServiceServicer):
     def SayHello(self, request, context):
         response = hello_pb2.HelloReply()
-        response.message = f"Hello, {request.prompt}!"
+        response.message = request.prompt
         return response
 
 
