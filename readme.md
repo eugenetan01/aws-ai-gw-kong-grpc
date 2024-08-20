@@ -1,19 +1,25 @@
+# Pre-requisites
+
+__1. If having issues with aws cli, delete the contents in `~/.aws/credentials` and go to okta tile "AWS - Kong" -> click "Access Keys" and copy paste "Option 2: Add a profile to your AWS credentials file" into the `~/.aws/credentials` file__
+
+__2. Test if it's working by running `aws s3 ls` - you should see a list of s3 buckets in terminal_
+
 # Setup
 
-1. run the `pip3 install -r requirements.txt`
+__1. run the `pip3 install -r requirements.txt`__
 
-2. run the below command to generate the necessary protocol buffers
+__2. run the below command to generate the necessary protocol buffers__
   `python -m grpc_tools.protoc -I. --python_out=./helloworld --grpc_python_out=./helloworld hello.proto`
 
-3. change the import statement to `from . import hello_pb2 as hello__pb2` instead of `import hello_pb2 as hello__pb2` in the hello_pb2_grpc.py file
+__3. change the import statement to `from . import hello_pb2 as hello__pb2` instead of `import hello_pb2 as hello__pb2` in the hello_pb2_grpc.py file__
 
-4. run the main.py
+__4. run the main.py__
   `python3 main.py`
 
-5. test the client connectivity by connecting to the grpc server and ensuring it connects to localhost:50051 instead of 9080
+__5. test the client connectivity by connecting to the grpc server and ensuring it connects to localhost:50051 instead of 9080__
   `python3 client.py`
 
-4. create a docker container for the kong gateway. use the below to spin up the docker image
+__4. create a docker container for the kong gateway. use the below to spin up the docker image__
   ```
   docker run -d --name kong-gateway \
   --network=kong-net \
@@ -41,7 +47,7 @@
   kong/kong-gateway:3.7.1.2
   ```
 
-5. Create a service and route
+__5. Create a service and route__
   ```
   curl -XPOST localhost:8001/services \
     --data name=grpc \
@@ -57,5 +63,5 @@
     --data paths=/
   ```
 
-6. Test the proxy connectivity via Kong by changing the port back to port 9080
+__6. Test the proxy connectivity via Kong by changing the port back to port 9080__
   `python3 client.py`
